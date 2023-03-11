@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sensor HC-SR04 y LED</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<h1>Sensor HC-SR04 y LED</h1>
+	<div>
+		<h2>Distancia</h2>
+		<p id="distancia"></p>
+	</div>
+	<div>
+		<h2>LED</h2>
+		<p id="estado-led"></p>
+	</div>
+	<div>
+		<h2>Control de LED</h2>
+		<form action="/led/on">
+			<button type="submit">Encender</button>
+		</form>
+		<form action="/led/off">
+			<button type="submit">Apagar</button>
+		</form>
+	</div>
+	<script>
+		setInterval(function() {
+			fetch('/distancia')
+				.then(function(response) {
+					return response.text();
+				})
+				.then(function(distancia) {
+					document.querySelector('#distancia').textContent = distancia + ' cm';
+				});
+			fetch('/led')
+				.then(function(response) {
+					return response.text();
+				})
+				.then(function(estado) {
+					document.querySelector('#estado-led').textContent = estado;
+				});
+		}, 1000);
+	</script>
+</body>
+</html>
